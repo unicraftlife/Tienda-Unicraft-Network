@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Exitosa</title>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1f1c2c, #928DAB);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        #confirmationMessage {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 400px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        #confirmationMessage h2 {
+            margin: 0;
+            color: #27ae60;
+        }
+
+        #confirmationMessage p {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        #confirmationMessage span {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            #confirmationMessage {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="confirmationMessage">
+        <h2>¡Compra Exitosa!</h2>
+        <p>Tu compra ha sido realizada con éxito. Gracias por comprar con nosotros.</p>
+        <p>Tu ID de compra es: <span id="orderId"></span></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+
+            if (orderId) {
+                document.getElementById('orderId').innerText = orderId;
+            } else {
+                console.error('No se encontró el ID de la compra en la URL.');
+            }
+        });
+    </script>
+</body>
+</html>
+

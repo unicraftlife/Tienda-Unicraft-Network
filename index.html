@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Minecraft - Estilo Celestial</title>
+
+  <!-- Fuentes de Google para un estilo más moderno -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #2E0249, #60076C, #0B0849);
+      background-size: 300% 300%;
+      animation: gradientBackground 10s ease infinite;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Animación de fondo */
+    @keyframes gradientBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Formulario de login */
+    #loginForm {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    #loginForm label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #F4F4F9;
+    }
+
+    #loginForm input, #loginForm select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1rem;
+      box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s;
+    }
+
+    #loginForm input:focus, #loginForm select:focus {
+      background: rgba(255, 255, 255, 0.3);
+      outline: none;
+    }
+
+    #loginForm button {
+      background-color: #FF69B4;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    #loginForm button:hover {
+      background-color: #FF1493;
+    }
+
+    /* Estrellas en el fondo */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/celestial.png') repeat;
+      z-index: 1;
+      opacity: 0.2;
+    }
+
+    /* Estilo del título */
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      color: #FFD700;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    /* Efecto de partículas brillantes */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      z-index: 2;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Círculos brillantes flotantes */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .circle-1 {
+      width: 60px;
+      height: 60px;
+      top: 20%;
+      left: 10%;
+      animation-duration: 4s;
+    }
+
+    .circle-2 {
+      width: 100px;
+      height: 100px;
+      top: 60%;
+      right: 10%;
+      animation-duration: 6s;
+    }
+
+    .circle-3 {
+      width: 80px;
+      height: 80px;
+      bottom: 30%;
+      left: 20%;
+      animation-duration: 5s;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars"></div>
+  <div class="particles">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+  </div>
+
+  <h1>Iniciar Sesión</h1>
+
+  <form id="loginForm">
+    <label for="username">Nombre de usuario de Minecraft:</label>
+    <input type="text" id="username" name="username" required>
+    
+    <label for="platform">Plataforma:</label>
+    <select id="platform" name="platform">
+      <option value="java">Java</option>
+      <option value="bedrock">Bedrock</option>
+    </select>
+    
+    <button type="submit">Iniciar Sesión</button>
+  </form>
+
+  <script>
+    // Función para verificar si un usuario de Java es premium
+    async function verificarUsuarioPremium(username) {
+      const mojangApiUrl = `https://api.mojang.com/users/profiles/minecraft/${username}`;
+      
+      try {
+        const response = await fetch(mojangApiUrl);
+        
+        // Si la cuenta existe en Mojang, es premium
+        if (response.status === 200) {
+          return true;  // Es Premium
+        } else {
+          return false; // No es Premium
+        }
+      } catch (error) {
+        console.error('Error al verificar el usuario:', error);
+        return false;
+      }
+    }
+  
+    // Función principal de login y redirección
+    async function loginUsuario(username, isBedrock) {
+      let esPremium = false;
+  
+      if (!isBedrock) {
+        // Verificar si es jugador de Java y si es premium
+        esPremium = await verificarUsuarioPremium(username);
+      }
+  
+      // Guardar el Nick en localStorage
+      localStorage.setItem('minecraftNick', username);
+  
+      // Redirigir según la plataforma y si es premium o no
+      if (isBedrock) {
+        window.location.href = "principal.html";
+      } else {
+        if (esPremium) {
+          window.location.href = "principal.html";
+        } else {
+          window.location.href = "principal.html";
+        }
+      }
+    }
+  
+    // Manejar el evento de envío del formulario
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const platform = document.getElementById('platform').value;
+      const isBedrock = platform === 'bedrock';
+  
+      // Llamar a la función para verificar y redirigir
+      await loginUsuario(username, isBedrock);
+    });
+  </script>
+  
+
+</body>
+</html>
+
